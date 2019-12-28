@@ -1,18 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe CampaignsController, type: :controller do
-  # Para verificar se o usuário está logado
   include Devise::Test::ControllerHelpers
 
   before(:each) do
-    # request.env["HTTP_ACCEPT"] = 'application/json'
-
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @current_user = FactoryBot.create(:user)
     sign_in @current_user
   end
 
-  # Informa se retornou sucesso
   describe "GET #index" do
     it "returns http success" do
       get :index
@@ -21,6 +17,7 @@ RSpec.describe CampaignsController, type: :controller do
   end
 
   describe "GET #show" do
+
     context "campaing exists" do
       context "User is the owner of the campaing" do
         it "Returns success" do
@@ -62,8 +59,8 @@ RSpec.describe CampaignsController, type: :controller do
 
     it "Create campaign with right attributes" do
       expect(Campaign.last.user).to eql(@current_user)
-      expect(Campaign.last.title).to eql(@campaign_attributes[:title])
-      expect(Campaign.last.description).to eql(@campaign_attributes[:description])
+      expect(Campaign.last.title).to eql("Nova Campanha")
+      expect(Campaign.last.description).to eql("Descreva sua campanha...")
       expect(Campaign.last.status).to eql('pending')
     end
 
